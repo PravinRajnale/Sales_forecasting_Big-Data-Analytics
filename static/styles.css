@@ -1,0 +1,26 @@
+/* static/styles.css */
+
+body {
+    background-color: #f8f9fa;
+}
+
+h1, h3, h5 {
+    color: #343a40;
+}
+
+.table {
+    background-color: #ffffff;
+}
+
+.alert-info {
+    margin-bottom: 1rem; /* Ensure proper spacing */
+}
+
+.alert-info ul {
+    margin-bottom: 0;
+}
+
+img {
+    max-width: 100%; /* Ensures images are responsive */
+    height: auto; /* Keeps aspect ratio */
+}

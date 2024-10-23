@@ -1,0 +1,103 @@
+<!-- templates/dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Added for responsiveness -->
+    <title>GEN AI Analysis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container-fluid mt-4">
+        <h1 class="text-center">Sales Forecasting Dashboard</h1>
+        <hr>
+
+        <!-- Data Description -->
+        <h3>Data Description</h3>
+        {{ data_description | safe }}
+
+        <!-- Evaluation Metrics -->
+        <h3 class="mt-4">Model Evaluation</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Model</th>
+                        <th>Mean Squared Error (MSE)</th>
+                        <th>R² Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for model, metrics in evaluation.items() %}
+                    <tr>
+                        <td>{{ model }}</td>
+                        <td>{{ metrics['MSE'] }}</td>
+                        <td>{{ metrics['R2 Score'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Visualizations -->
+        <h3 class="mt-4">Visualizations</h3>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <h5>Actual vs Predicted Sales (Linear Regression)</h5>
+                <img src="data:image/png;base64,{{ plot1 }}" class="img-fluid rounded">
+                <p><strong>Insights:</strong> The linear regression model shows a close correlation between the predicted and actual sales. However, slight deviations in certain months indicate possible seasonal effects or external factors affecting sales.</p>
+                <p><strong>Recommendation:</strong> Further investigate external factors during peak sales months to enhance prediction accuracy. Consider implementing seasonal adjustment factors in future models.</p>
+            </div>
+            <div class="col-md-6 mb-4">
+                <h5>Actual vs Predicted Sales (Random Forest)</h5>
+                <img src="data:image/png;base64,{{ plot2 }}" class="img-fluid rounded">
+                <p><strong>Insights:</strong> The random forest model demonstrates better prediction accuracy than linear regression, particularly in months with high sales variability.</p>
+                <p><strong>Recommendation:</strong> Utilize the random forest model as the primary forecasting tool. Investigate feature engineering techniques to further enhance model performance.</p>
+            </div>
+            <div class="col-md-6 mb-4">
+                <h5>Distribution of Total Sales</h5>
+                <img src="data:image/png;base64,{{ plot3 }}" class="img-fluid rounded">
+                <p><strong>Insights:</strong> The sales distribution shows a right skew, indicating a small number of months with exceptionally high sales. This suggests the presence of outliers.</p>
+                <p><strong>Recommendation:</strong> Analyze outlier months to identify successful strategies that could be replicated in other periods. Consider strategies for sustaining higher sales levels.</p>
+            </div>
+            <div class="col-md-6 mb-4">
+                <h5>Correlation Heatmap</h5>
+                <img src="data:image/png;base64,{{ plot4 }}" class="img-fluid rounded">
+                <p><strong>Insights:</strong> Strong correlations exist between marketing spend and sales. Additionally, certain product categories show significant influence on overall sales.</p>
+                <p><strong>Recommendation:</strong> Allocate more budget towards high-performing marketing strategies and focus on promoting top-selling product categories to maximize revenue.</p>
+            </div>
+            <div class="col-md-6 mb-4">
+                <h5>Feature Importance (Random Forest)</h5>
+                <img src="data:image/png;base64,{{ plot5 }}" class="img-fluid rounded">
+                <p><strong>Insights:</strong> The model identifies marketing spend and seasonality as the most influential features affecting sales predictions.</p>
+                <p><strong>Recommendation:</strong> Optimize marketing campaigns based on these insights. Regularly update the model with new data to ensure relevance and accuracy.</p>
+            </div>
+            <div class="col-md-6 mb-4">
+                <h5>Sales Over Time</h5>
+                <img src="data:image/png;base64,{{ plot6 }}" class="img-fluid rounded">
+                <p><strong>Insights:</strong> Sales show consistent growth over time, with occasional dips that correspond to seasonal trends.</p>
+                <p><strong>Recommendation:</strong> Develop strategies to counteract seasonal downturns, such as promotional campaigns during lower sales periods to boost overall revenue.</p>
+            </div>
+        </div>
+
+        <!-- Insights -->
+        <h3 class="mt-4">Comprehensive Insights and Recommendations</h3>
+        <div class="alert alert-info" role="alert">
+            <h5>Summary:</h5>
+            <ul>
+                <li>Implement a more robust forecasting model, such as random forest, for improved accuracy.</li>
+                <li>Investigate seasonal trends and their impact on sales to fine-tune predictions.</li>
+                <li>Focus marketing efforts on high-performing strategies to leverage strong correlations identified in the heatmap.</li>
+                <li>Regularly review outlier months to replicate success and improve overall sales strategies.</li>
+            </ul>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center mt-5 mb-3">
+            <p>&copy; 2024 Sales Forecasting Application</p>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> <!-- Added Bootstrap JS -->
+</body>
+</html>
